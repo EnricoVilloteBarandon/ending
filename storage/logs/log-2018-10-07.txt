@@ -1,0 +1,3 @@
+[2018-10-07 23:17:13] local.INFO: app.requests {"request":{"username":"kiko"}} 
+[2018-10-07 23:17:14] local.INFO: app.requests {"request":[]} 
+[2018-10-07 23:17:20] local.INFO: app.requests {"request":[]} 

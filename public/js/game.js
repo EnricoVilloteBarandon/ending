@@ -28,29 +28,40 @@ $("document").ready(function(){
         $("#frmGame")[0].reset();
         $("#gameModal").modal("show");
     });
+    // $("#btnSubmitGame").on("click",function(){
+    //     $.ajax({
+    //         "url" : BASEURL + '/submitGame',
+    //         type : "POST",
+    //         data : {
+    //             "_token" : $('[name="_token"]').val(),
+    //             "title" : $("#title").val(),
+    //             "date" :  $("#date").val(),
+    //             "amount" :  $("#amount").val(),
+    //             "operation" : $("#operation").val(),
+    //             "id" : $("#id").val(),
+    //             "result" : $("#result").val(),
+    //             "status" : $("#status").val()
+    //         },
+    //         success : function(response){
+    //             swal({
+    //                 title: "Success",
+    //                 text: "Saved!",
+    //                 icon: "success",
+    //                 button: "Okay",
+    //               });
+    //               $("button.swal-button--confirm").on("click",function(){
+    //                 if(response == 0){
+    //                     location.reload();
+    //                 }
+    //               });
+    //         },
+    //         error : function(error){
+    //             alert(error);
+    //         }
+    //     });
+    // });
     $("#btnSubmitGame").on("click",function(){
-        $.ajax({
-            "url" : BASEURL + '/submitGame',
-            type : "POST",
-            data : {
-                "_token" : $('[name="_token"]').val(),
-                "title" : $("#title").val(),
-                "date" :  $("#date").val(),
-                "amount" :  $("#amount").val(),
-                "operation" : $("#operation").val(),
-                "id" : $("#id").val(),
-                "result" : $("#result").val(),
-                "status" : $("#status").val()
-            },
-            success : function(response){
-                if(response == 0){
-                    location.reload();
-                }
-            },
-            error : function(error){
-                alert(error);
-            }
-        });
+        $("#frmGame").submit();
     });
     $("body").delegate(".btnPrice","click",function(){
         var gameId = $(this).data("id");
@@ -106,4 +117,16 @@ $("document").ready(function(){
             }
         });
     });
+    var optionsGame = {
+        beforeSubmit: function()
+        {},
+        success: function(response){
+            alert("success");
+        },
+        complete: function() {
+            var form = $("#frmGame");
+            form[0].reset();
+        }
+    };
+    $("#frmGame").ajaxForm(optionsGame);
 });

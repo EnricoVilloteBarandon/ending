@@ -93,6 +93,7 @@
     }
     .bet{
         color:red;
+        border: 1px solid #000;
     }
     .bet:hover{cursor:pointer;}
     .myBet{

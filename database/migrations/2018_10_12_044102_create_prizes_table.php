@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsersTable extends Migration
+class CreatePrizesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,17 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('prices',function(Blueprint $table){
             $table->increments('id');
-            $table->string('firstname',150)->nullable();
-            $table->string('lastname',150)->nullable();
-            $table->string('email',100);
-            $table->string('contact',25);
-            $table->string('password',100);
-            $table->integer('balance')->default(0);
-            $table->integer('agent');
-            $table->rememberToken();
-            $table->tinyInteger('usertype');
+            $table->integer('gameid',11);
+            $table->float('firstquarter');
+            $table->float('secondquarter');
+            $table->float('thirdquarter');
+            $table->float('fourthquarter');
+            $table->string('grandprice',255);
+            $table->integer('addedby',11);
+            $table->string('winner',50);
+            $table->integer('claimed',11);
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
             // $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
         });
@@ -37,6 +37,5 @@ class CreateUsersTable extends Migration
     public function down()
     {
         //
-        Schema::drop('users');
     }
 }

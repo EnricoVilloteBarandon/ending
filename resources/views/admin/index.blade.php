@@ -7,10 +7,10 @@
                 <div class="col-sm-4 game">
                     <h4>{{ $value->title }}</h4>
                     <p><strong>Game Date:</strong> {{ date('Y-m-d h:i A',strtotime($value->date)) }}</p>
-                    <p><strong>Amount:</strong> {{ $value->bet_amount }}</p>
+                    <p><strong>Bet Amount:</strong> {{ $value->bet_amount }}</p>
                     <div class="">
                         <input type="button" class="btn btn-success btnGame" value="Game" data-id="{{ $value->id }}">
-                        <input type="button" class="btn btn-danger btnPrice" value="Prices" data-id="{{ $value->id }}">
+                        <input type="button" class="btn btn-danger btnPrice" value="Prizes" data-id="{{ $value->id }}">
                     </div>
                 </div>
             @endforeach

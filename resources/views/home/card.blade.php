@@ -3,16 +3,57 @@
         <div class="loader"></div>
     </div>
     <div class="container">
-        <div class="jumbotron text-center">
-            <h1 id="title" data-title="{{ $bet_amount->id }}">{{ $bet_amount->title }}</h1>
-            <h4 id="amount" data-amount="{{ $bet_amount->bet_amount }}">Amount: Php <span style="color:green;">{{ number_format($bet_amount->bet_amount,2) }}</span> per bet</h4>
-            <h4>Grand Price: {{ $price->grandprice }}</h4>
-            <h4>Date: {{ date('Y-m-d h:i A',strtotime($bet_amount->date)) }}</h4>
-            <h5>Balance: Php 
-                <?php 
-                    echo number_format($_SESSION["balance"],2);
-                ?>
-            </h5>
+
+        <div class="card card-details h-100 border-primary">
+            <div class="card-header" style="min-height: 71px; font-weight: bold; padding: .5rem;">
+                <h3 id="title" data-title="{{ $bet_amount->id }}">{{ $bet_amount->title }}</h3>
+                <h5 id="amount" data-amount="{{ $bet_amount->bet_amount }}">Amount: Php <span style="color:green;">{{ number_format($bet_amount->bet_amount,2) }}</span> per bet</h5>
+                <h5>Grand Price: {{ $price->grandprice }}</h5>
+                <h5>Date: {{ date('Y-m-d h:i A',strtotime($bet_amount->date)) }}</h5>
+
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    {!! $content !!}
+                    <?php
+                    // $count = 0;
+                    // for($index = 0; $index < 10; $index++){
+                    //     for($i = 0; $i < 10; $i++){
+                    //         switch(true){
+                    //             case $count <= 24:
+                    //                 if($count == 0){
+                    //                     echo "<div class='col-md-3'>";
+                    //                 }
+                    //                 echo "<div class='col-md-12'>" . $index . "-" . $i . "</div>";
+                    //                 break;
+                    //             case $count <= 49:
+                    //                 if($count == 25){
+                    //                     echo "</div>";
+                    //                     echo "<div class='col-md-3'>";
+                    //                 }
+                    //                 echo "<div class='col-md-12'>" . $index . "-" . $i . "</div>";
+                    //                 break;
+                    //             case $count <= 74:
+                    //                 if($count == 50){
+                    //                     echo "</div>";
+                    //                     echo "<div class='col-md-3'>";
+                    //                 }
+                    //                 echo "<div class='col-md-12'>" . $index . "-" . $i . "</div>";
+                    //                 break;
+                    //             case $count <= 99:
+                    //                 if($count == 75){
+                    //                     echo "</div>";
+                    //                     echo "<div class='col-md-3'>";
+                    //                 }
+                    //                 echo "<div class='col-md-12'>" . $index . "-" . $i . "</div>";
+                    //                 break;
+                    //         }
+                    //         $count++;
+                    //     }
+                    // }
+                    ?>
+                </div>
+            </div>
         </div>
         <!-- <div class="row">
             <div class="col-lg-3 block">
@@ -43,46 +84,7 @@
                 <div class="col-md-12 num">2-4</div>
             </div>
         </div> -->
-        <div class="row">
-            {!! $content !!}
-            <?php
-                // $count = 0;
-                // for($index = 0; $index < 10; $index++){
-                //     for($i = 0; $i < 10; $i++){
-                //         switch(true){
-                //             case $count <= 24:
-                //                 if($count == 0){
-                //                     echo "<div class='col-md-3'>";
-                //                 }
-                //                 echo "<div class='col-md-12'>" . $index . "-" . $i . "</div>";
-                //                 break;
-                //             case $count <= 49:
-                //                 if($count == 25){
-                //                     echo "</div>";
-                //                     echo "<div class='col-md-3'>";
-                //                 }
-                //                 echo "<div class='col-md-12'>" . $index . "-" . $i . "</div>";
-                //                 break;
-                //             case $count <= 74:
-                //                 if($count == 50){
-                //                     echo "</div>";
-                //                     echo "<div class='col-md-3'>";
-                //                 }
-                //                 echo "<div class='col-md-12'>" . $index . "-" . $i . "</div>";
-                //                 break;
-                //             case $count <= 99:
-                //                 if($count == 75){
-                //                     echo "</div>";
-                //                     echo "<div class='col-md-3'>";
-                //                 }
-                //                 echo "<div class='col-md-12'>" . $index . "-" . $i . "</div>";
-                //                 break;
-                //         }
-                //         $count++;
-                //     }
-                // }
-            ?>
-        </div>
+
     </div>
 </div>
 <style>
@@ -92,13 +94,13 @@
         color:#000;
     }
     .bet{
-        color:red;
+        border: 1px solid red;
     }
     .bet:hover{cursor:pointer;}
-    .myBet{
-        font-weight:bold;
-        color:green;
-    }
+    /*.myBet{*/
+        /*font-weight:bold;*/
+        /*color:green;*/
+    /*}*/
     /* .myBet:hover{cursor:not-allowed;} */
 </style>
 

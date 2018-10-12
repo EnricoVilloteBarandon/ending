@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLogsTable extends Migration
+class CreateImagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class CreateLogsTable extends Migration
      */
     public function up()
     {
-        Schema::create('logs',function(Blueprint $table){
+        Schema::create('images',function(Blueprint $table){
             $table->increments('id');
-            $table->integer('userid');
-            $table->string('description',100);
+            $table->integer('gameid',11);
+            $table->string('name',100);
+            $table->string('type',100);
+            $table->string('path',255);
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
-            // $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
         });
     }
 
@@ -30,6 +31,5 @@ class CreateLogsTable extends Migration
     public function down()
     {
         //
-        Schema::drop('logs');
     }
 }

@@ -72,7 +72,6 @@ return array(
 			*/
 			$theme->asset()->add('css-bootstrap-min','css/bootstrap.min.css');
 			$theme->asset()->add('css-notie','css/notie.min.css');
-			$theme->asset()->add('css-font-awesome','css/font-awesome.min.css');
 
 			$theme->asset()->add('js-jquery-min','js/jquery.min.js');
 			$theme->asset()->add('js-bootstrap-min','js/bootstrap.min.js');

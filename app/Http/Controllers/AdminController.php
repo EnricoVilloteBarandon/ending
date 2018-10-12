@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+ini_set('display_errors',1);
+error_reporting(E_ALL);
 use Illuminate\Http\Request;
 use Theme;
 use Auth;
@@ -14,6 +16,8 @@ use Illuminate\Support\Facades\Hash;
 use App\GameSchedule;
 use App\Prices;
 use App\Bets;
+use App\Images;
+use Storage;
 class AdminController extends Controller
 {
     public function displayDashboard(){
@@ -90,12 +94,13 @@ class AdminController extends Controller
                     'balance' => $request->input('balance'),
                     'usertype' => $request->input('usertype'),
                     'password' =>  Hash::make($request->input('password')),
-                    'agent' => Auth::id()
+                    'agent' => 1,
+                    'created_at' => date('Y-m-d H:i:s', time())
                 ];
                 $res = $usersModel->insert($dataArray);
                 if($res){
                     $logs->dataArray = [
-                        "userid" => Auth::id(),
+                        "userid" => 1,
                         "description" => "Insert:" . $request->input('firstname') . " " . $request->input('lastname') . " utype:" . $request->input('usertype')
                     ];
                     $logs->saveLog($logs->dataArray);
@@ -133,7 +138,20 @@ class AdminController extends Controller
                 'bet_amount' => $request->input("amount"),
                 'added_by' => Auth::id(),
             ];
-            $res = $gameModel->insert($dataArray);
+            $res = $gameModel->insertGetId($dataArray);
+            $imgDataArray = [];
+            $imagesModel = new Images();
+            for($i = 0; $i < count($_FILES["images"]["name"]); $i++){
+
+                $imgDataArray[$i]["name"] = $_FILES["images"]["name"][$i];
+                $imgDataArray[$i]["type"] = $_FILES["images"]["type"][$i];
+                $imgDataArray[$i]["path"] = "img/prizesImg/" . $_FILES["images"]["name"][$i];
+                $imgDataArray[$i]["gameid"] = $res;
+                $imagesModel->insert($imgDataArray[$i]);
+                if(move_uploaded_file($_FILES["images"]["tmp_name"][$i], $imgDataArray[$i]["path"])){
+                    return 0;
+                }
+            }
         }else{
             // update
             $dataArray = [

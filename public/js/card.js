@@ -3,7 +3,7 @@ $("document").ready(function(){
     $("body").delegate('.bet','click', function(){
         var sBet =  $(this).data("combination");
         if($(this).hasClass('else')){
-            swal($(this).find('span.num').text(),"Bet is already placed in this combination!", "error");
+            swal($(this).find('span.num').text(),"Bet is already placed in this combination! Try the other combinations.", "error");
             // notie.alert({
             //     type: 'error',
             //     text: $(this).find('span.num').text() + "<br/><h3>Bet is already placed in this combination!</h3>",
@@ -40,7 +40,7 @@ $("document").ready(function(){
                                 //     text: $(this).find('span.num').text() + "<br/><h3>Balance insufficient.</h3>"
                                 // });
                                 swal($(this).find('span.num').text() + "Balance insufficient.", {
-                                    icon: "success",
+                                    icon: "error",
                                 });
                                 $(".loader").css("display","none");
                             }else if(response == 0){
@@ -67,6 +67,9 @@ $("document").ready(function(){
                                         }
                                         $(".loader").css("display","none");
                                         // location.reload();
+                                        $("button.swal-button--confirm").on("click",function(){
+                                            location.reload();
+                                        });
                                     },
                                     error : function(error){
                                         swal("Something went wrong!", error, "error");

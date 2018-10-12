@@ -7,9 +7,10 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
-        <form id="frmGame">
+        <form id="frmGame" enctype="multipart/form-data" method="post" action="submitGame">
             <input type="hidden" name="id" id="id">
             <input type="hidden" name="operation" id="operation" value="0">
+            {{ csrf_field() }}
             <div class="form-group">
                 <label><span>*</span>Title:</label>
                 <input type="text" class="form-control" name="title" id="title">
@@ -32,6 +33,10 @@
                   <option value="0">Open</option>
                   <option value="1">Close</option>
                 </select>
+            </div>
+            <div class="form-group">
+                <label>Pics:</label> 
+                <input type="file" multiple="multiple" name="images[]">
             </div>
         </form>
       </div>

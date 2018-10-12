@@ -1,8 +1,5 @@
-<<<<<<< HEAD
+
 <script src="{{ asset('js/users.js') }}"></script>
 <script src="{{ asset('js/game.js') }}"></script>
-=======
-<script src="{{ asset('js/users.js') }}"></script>
-<script src="{{ asset('js/game.js') }}"></script>
->>>>>>> test commit
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <footer>Footer</footer>

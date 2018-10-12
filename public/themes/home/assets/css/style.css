@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-body{
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif !important;
-}
+
 .loader{
     background-image: url('../img/ajax-loader.gif');
     background-repeat: no-repeat;
@@ -14,21 +11,56 @@ body{
     height: 120px;
     width: 120px;
     display: none;
-=======
-body{
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif !important;
 }
-.loader{
-    background-image: url('../img/ajax-loader.gif');
-    background-repeat: no-repeat;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    position: absolute;
-    margin:auto;
-    height: 120px;
-    width: 120px;
-    display: none;
->>>>>>> test commit
+body, html {
+    font-family: 'Raleway', sans-serif;
+    background: #aa4b6b;
+    background: -webkit-linear-gradient(to right, #3b8d99, #6b6b83, #aa4b6b);
+    background: linear-gradient(to right, #3b8d99, #6b6b83, #aa4b6b);
+    font-size: 16px;
+    margin-top: 10px;
+}
+.card-body p{
+    margin: 0 !important;
+}
+.card-details {
+    text-align: center;
+    box-shadow: 6px 10px 20px grey;
+}
+.div-card{
+    margin-bottom: 20px;
+}
+.card-mainDiv {
+    border: none;
+    background: #ECE9E6;
+    background: -webkit-linear-gradient(to right, #FFFFFF, #ECE9E6);
+    background: linear-gradient(to right, #FFFFFF, #ECE9E6);
+}
+.main-card-header,
+.player-card-header{
+    background: #232526;
+    background: -webkit-linear-gradient(to right, #414345, #232526);
+    background: linear-gradient(to right, #414345, #232526);
+    border-color: black;
+    border-right: 1px solid black;
+    color: white;
+}
+.bet {
+    text-align: left !important;
+    border: solid 2px;
+}
+.myBet .num {
+    font-weight: bold !important;
+    color: #ffff !important;
+}
+.myBet {
+    font-weight: bold;
+    color: #ffff;
+    background: green;
+    /*border: solid 2px green;*/
+}
+.bet.else {
+    background: #a8e063;
+    color: #ffff;
+    /*border: solid 1px #a8e063;*/
 }

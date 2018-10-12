@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php
 namespace App;
 class LogClass{
@@ -8,4 +9,16 @@ class LogClass{
     public function saveLog($arr){
         return Logs::insertLog($arr);
     }
+=======
+<?php
+namespace App;
+class LogClass{
+    public $dataArray = [
+        "userid" => "",
+        "description" => ""
+    ];
+    public function saveLog($arr){
+        return Logs::insertLog($arr);
+    }
+>>>>>>> test commit
 }

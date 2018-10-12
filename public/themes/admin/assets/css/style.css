@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 a{
     font-family: tahoma 
 }
@@ -13,4 +14,21 @@ p.alertP{
     font-size: 13px;
     font-weight: bold;
     color:red;
+=======
+a{
+    font-family: tahoma 
+}
+.notie-container {
+    box-shadow: none;
+    z-index: 2000 !important;
+}
+.notie-alert,.notie-container{
+    z-index: 2000 !important;
+}
+p.alertP{
+    margin: 0px;
+    font-size: 13px;
+    font-weight: bold;
+    color:red;
+>>>>>>> test commit
 }

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 body{
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif !important;
 }
@@ -13,4 +14,21 @@ body{
     height: 120px;
     width: 120px;
     display: none;
+=======
+body{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif !important;
+}
+.loader{
+    background-image: url('../img/ajax-loader.gif');
+    background-repeat: no-repeat;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    margin:auto;
+    height: 120px;
+    width: 120px;
+    display: none;
+>>>>>>> test commit
 }

@@ -13,13 +13,14 @@ use App\Bets;
 use App\Prices;
 use App\Users;
 use View;
+use App\Images;
 class HomeController extends Controller
 {
     public function dashboard(){
         if (!isset($_SESSION)) session_start();
         if(isset($_SESSION["username"])){
             $username = $_SESSION["username"];
-            $odbc = odbc_connect('noypi','','');
+            $odbc = odbc_connect('cima','','');
             $query = "select * from cust.dbf where ucase(NAME) = '". strtoupper($username) ."'";
             $res = odbc_exec($odbc,$query);
             $balance = 0;
@@ -32,7 +33,7 @@ class HomeController extends Controller
                 'balance' => $balance,
                 'games' => $gamesModel->getAvailableGames()
             ];
-            Theme::uses('home')->setTitle('Admin Dashboard');
+            Theme::uses('home')->setTitle('Dashboard');
             return Theme::view('home/index',$dataArray);
         }else{
             return view('home/nosession');
@@ -79,11 +80,13 @@ class HomeController extends Controller
         Auth::logout();
         if (!isset($_SESSION)) session_start();
         session_destroy();
-        return redirect()->to('/');
+        $url = "http://noypiclub.com/";
+        // return redirect()->to('/');
+        return Redirect::to($url);
     }
     public function getCardInfo(Request $request){
         if (!isset($_SESSION)) session_start();
-        $odbc = odbc_connect('noypi','','');
+        $odbc = odbc_connect('cima','','');
         $query = "select * from cust.dbf where ucase(NAME) = '". strtoupper($_SESSION["username"]) ."'";
         $res = odbc_exec($odbc,$query);
         $balance = 0;
@@ -138,7 +141,7 @@ class HomeController extends Controller
             'price' => $pricesModel->getPrice($iGameId),
             'balance' => $_SESSION["balance"]
         ];
-        Theme::uses('home')->setTitle('Dashboard');
+        Theme::uses('home')->setTitle('Card');
         return Theme::view('home/card',$dataArray);
     }
     public function getBetsById(Request $request){
@@ -171,6 +174,7 @@ class HomeController extends Controller
             "gameid" => $request->input("gameid"),
             "bet" => $request->input("bet"),
             "amount" => $request->input("amount"),
+            "created_at" => date('Y-m-d H:i:s',time())
         ];
         $betsModel = new Bets();
         // $usersModel = new Users();
@@ -187,12 +191,12 @@ class HomeController extends Controller
         $amount = $request->input('amount');
         session_start();
         $username = $_SESSION["username"];
-        $odbc = odbc_connect('noypi','','');
+        $odbc = odbc_connect('cima','','');
         $query = "select * from cust.dbf where ucase(NAME) = '". strtoupper($username) ."'";
         $res = odbc_exec($odbc,$query);
         $balance = 0;
         while($row = odbc_fetch_array($res)){
-            $balance = $row["BALANCE"];
+            $balance = $row["BALANCE"] + $row["CAP"] + $row["CURRENTBET"] + $row["MON_RSLT"] + $row["TUE_RSLT"] + $row["WED_RSLT"] + $row["THU_RSLT"] + $row["FRI_RSLT"] + $row["SAT_RSLT"] + $row["SUN_RSLT"];
         }
         if($balance < (int)$amount){
             return "1";
@@ -203,7 +207,7 @@ class HomeController extends Controller
     public function odbcLogin(Request $request){
         $username = $request->input("name");
         $password = $request->input("password");
-        $odbc =  odbc_connect('noypi','','');
+        $odbc =  odbc_connect('cima','','');
         $query = "select * from cust.dbf where ucase(NAME) = '". strtoupper($username) ."' and ucase(PASSWORD) = '". strtoupper($password) ."'";
         $res = odbc_exec($odbc, $query);
         if(odbc_fetch_row($res) > 0){
@@ -211,7 +215,7 @@ class HomeController extends Controller
         }
     }
     public static function updateOdbcBalance($dataArray){
-        $odbc = odbc_connect('noypi','','');
+        $odbc = odbc_connect('cima','','');
         $query = "select * from cust.dbf where ucase(NAME) = '". strtoupper($dataArray["playerid"]) ."'";
         $res = odbc_exec($odbc,$query);
         $oldBalance = 0;
@@ -230,7 +234,25 @@ class HomeController extends Controller
         $dataArray = [
             'bets' => $bets
         ];
-        Theme::uses('home')->setTitle('Admin Dashboard');
+        Theme::uses('home')->setTitle('Bets');
         return Theme::view('home/bets',$dataArray);
+    }
+    public function getPrizeInfo(Request $request){
+        $iGameId = $request->segment(2);
+        $prizeModel = new Prices();
+        $imagesModel = new Images();
+        $prizeInfo = $prizeModel->getPrizesInfoById($iGameId);
+        $imagesInfo = $imagesModel->getImageById($iGameId);
+        $dataArray = [
+            "prize" => $prizeInfo,
+            "images" => $imagesInfo
+        ];
+        Theme::uses('home')->setTitle('Prize');
+        return Theme::view('home/prize',$dataArray);
+    }
+    public static function getGameTitle($iGameId){
+        $gameSchedModel = new GameSchedule();
+        $gameTitle = $gameSchedModel->getGameInfoById($iGameId);
+        return $gameTitle;
     }
 }

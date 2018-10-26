@@ -1,17 +1,19 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="row titleHeader">
-            <div class="col-sm-4">Title</div>
-            <div class="col-sm-4">Bet</div>
-            <div class="col-sm-4">Amount</div>
+            <div class="col-sm-3">Title</div>
+            <div class="col-sm-3">Bet</div>
+            <div class="col-sm-3">Amount</div>
+            <div class="col-sm-3">Result</div>
         </div>
     </div>
     @foreach($bets as $index => $value)
         <div class="col-sm-12">
             <div class="row @if($value->status == 0) pending @elseif ($value->status == 2) win @else past @endif">
-                <div class="col-sm-4 info">{{ $value->title }}</div>
-                <div class="col-sm-4 info">{{ $value->bet }}</div>
-                <div class="col-sm-4 info">Php {{ number_format($value->bet_amount,2) }}</div>
+                <div class="col-sm-3 info">{{ $value->title }}</div>
+                <div class="col-sm-3 info">{{ $value->bet }}</div>
+                <div class="col-sm-3 info">Php {{ number_format($value->bet_amount,2) }}</div>
+                <div class="col-sm-3 info">@if($value->status == 0) Pending @elseif ($value->status == 2) Win @else -{{ number_format($value->bet_amount,2)}}@endif</div>
             </div>
         </div> 
     @endforeach
@@ -25,7 +27,7 @@
     }
     .past{
         text-align:center;
-        background-color:#ff9999;
+        background-color: #fd3535;
         margin-bottom:5px;
     }
     .win{

@@ -8,7 +8,15 @@
             <div class="card-header" style="min-height: 71px; font-weight: bold; padding: .5rem;">
                 <h3 id="title" data-title="{{ $bet_amount->id }}">{{ $bet_amount->title }}</h3>
                 <h5 id="amount" data-amount="{{ $bet_amount->bet_amount }}">Amount: Php <span style="color:green;">{{ number_format($bet_amount->bet_amount,2) }}</span> per bet</h5>
-                <h5>Grand Price: {{ $price->grandprice }}</h5>
+                <h5>Grand Price: 
+                    <?php 
+                        if(preg_match("/[a-z]/i", $price->grandprice)){
+                            echo "<a href='". url('/') ."/prize/$price->gameid'>" . $price->grandprice . "</a>";
+                        }else{
+                            echo "Php " . number_format($price->grandprice,2);
+                        }
+                    ?>
+                </h5>
                 <h5>Date: {{ date('Y-m-d h:i A',strtotime($bet_amount->date)) }}</h5>
 
             </div>

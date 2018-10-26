@@ -21,9 +21,9 @@ $("document").ready(function(){
         });
         $("#gameModal").modal("show");
     });
-    $("body").delegate(".btnPrice","click",function(){
-        var id = $(this).data("id");
-    });
+    // $("body").delegate(".btnPrice","click",function(){
+    //     var id = $(this).data("id");
+    // });
     $("#btnAddGame").on("click",function(){
         $("#frmGame")[0].reset();
         $("#gameModal").modal("show");
@@ -94,34 +94,38 @@ $("document").ready(function(){
         $("#prizesModal").modal("show");
     });
     $("#btnSubmitPrice").on("click", function(){
-        $.ajax({
-            "url" : BASEURL + '/submitPrizes',
-            type : "POST",
-            data : {
-                "_token" : $('[name="_token"]').val(),
-                "gameid" : $("#gameid").val(),
-                "grandprize" : $("#grandPrize").val(),
-                "firstq" : $("#firstQuarter").val(),
-                "secondq" : $("#secondQuarter").val(),
-                "thirdq" : $("#thirdQuarter").val(),
-                "fourthq" : $("#fourthQuarter").val(),
-                "operation" : $("#operationPrizes").val()
-            },
-            success : function(response){
-                if(response == 0){
-                    location.reload();
-                }
-            },
-            error:function(error){
-                alert(error);
-            }
-        });
+        // $.ajax({
+        //     "url" : BASEURL + '/submitPrizes',
+        //     type : "POST",
+        //     data : {
+        //         "_token" : $('[name="_token"]').val(),
+        //         "gameid" : $("#gameid").val(),
+        //         "grandprize" : $("#grandPrize").val(),
+        //         "firstq" : $("#firstQuarter").val(),
+        //         "secondq" : $("#secondQuarter").val(),
+        //         "thirdq" : $("#thirdQuarter").val(),
+        //         "fourthq" : $("#fourthQuarter").val(),
+        //         "operation" : $("#operationPrizes").val()
+        //     },
+        //     success : function(response){
+        //         if(response == 0){
+        //             location.reload();
+        //         }
+        //     },
+        //     error:function(error){
+        //         alert(error);
+        //     }
+        // });
+        $("#frmPrize").submit();
     });
     var optionsGame = {
         beforeSubmit: function()
         {},
         success: function(response){
-            alert("success");
+            swal("Success!", "Game Added!", "success");
+            $(".swal-button--confirm").on("click",function(){
+                location.reload();
+            });
         },
         complete: function() {
             var form = $("#frmGame");
@@ -129,4 +133,19 @@ $("document").ready(function(){
         }
     };
     $("#frmGame").ajaxForm(optionsGame);
+    var optionsPrize = {
+        beforeSubmit: function()
+        {},
+        success: function(response){
+            swal("Success!", "Prize Added!", "success");
+            $(".swal-button--confirm").on("click",function(){
+                location.reload();
+            });
+        },
+        complete: function() {
+            var form = $("#frmGame");
+            form[0].reset();
+        }
+    };
+    $("#frmPrize").ajaxForm(optionsPrize);
 });

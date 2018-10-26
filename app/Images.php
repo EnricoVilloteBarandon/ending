@@ -11,4 +11,9 @@ class Images extends Model
         DB::table($this->table)
             ->insert($dataArray);
     }
+    public function getImageById($id){
+        return DB::table($this->table)
+            ->where("gameid",$id)
+            ->get();
+    }
 }

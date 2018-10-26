@@ -10,7 +10,15 @@
                                 <div class="card-header" style="min-height: 71px; font-weight: bold; padding: .5rem;">{{ $value->title }}</div>
                                 <div class="card-body" style="padding: .5rem;">
                                     {{--<h5 class="card-title"></h5>--}}
-                                    <h5 class="card-text">Grand Price: {{ $value->grandprice }}</h5>
+                                    <h5 class="card-text">Grand Price:
+                                        <?php 
+                                            if(preg_match("/[a-z]/i", $value->grandprice)){
+                                                echo "<a href='". url('/') ."/prize/$value->id'>" . $value->grandprice . "</a>";
+                                            }else{
+                                                echo "Php " . number_format($value->grandprice,2);
+                                            }
+                                        ?>
+                                    </h5>
                                     <p class="card-text">{{ date("D, M d,Y g:i A",strtotime($value->date)) }}</p>
                                     <p class="card-text">Bet Amount: {{ number_format($value->bet_amount,2) }}</p>
                                     <a href="#" class="btn btn-primary games" data-gameid="{{ $value->id }}">View Card</a>

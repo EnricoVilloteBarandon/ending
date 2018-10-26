@@ -137,21 +137,25 @@ class AdminController extends Controller
                 'date' => $request->input("date"),
                 'bet_amount' => $request->input("amount"),
                 'added_by' => Auth::id(),
+                'created_at' => date('Y-m-d H:i:s',time())
             ];
             $res = $gameModel->insertGetId($dataArray);
-            $imgDataArray = [];
-            $imagesModel = new Images();
-            for($i = 0; $i < count($_FILES["images"]["name"]); $i++){
+            // if(count($_FILES["images"]["name"]) > 0){
+            //     $imgDataArray = [];
+            //     $imagesModel = new Images();
+            //     for($i = 0; $i < count($_FILES["images"]["name"]); $i++){
 
-                $imgDataArray[$i]["name"] = $_FILES["images"]["name"][$i];
-                $imgDataArray[$i]["type"] = $_FILES["images"]["type"][$i];
-                $imgDataArray[$i]["path"] = "img/prizesImg/" . $_FILES["images"]["name"][$i];
-                $imgDataArray[$i]["gameid"] = $res;
-                $imagesModel->insert($imgDataArray[$i]);
-                if(move_uploaded_file($_FILES["images"]["tmp_name"][$i], $imgDataArray[$i]["path"])){
-                    return 0;
-                }
-            }
+            //         $imgDataArray[$i]["name"] = $_FILES["images"]["name"][$i];
+            //         $imgDataArray[$i]["type"] = $_FILES["images"]["type"][$i];
+            //         $imgDataArray[$i]["path"] = "img/prizesImg/" . $_FILES["images"]["name"][$i];
+            //         $imgDataArray[$i]["gameid"] = $res;
+            //         $imgDataArray[$i]["created_at"] = date("Y-m-d H:i:s",time());
+            //         $imagesModel->insert($imgDataArray[$i]);
+            //         if(move_uploaded_file($_FILES["images"]["tmp_name"][$i], $imgDataArray[$i]["path"])){
+            //             return 0;
+            //         }
+            //     }
+            // }
         }else{
             // update
             $dataArray = [
@@ -199,14 +203,31 @@ class AdminController extends Controller
         if($operation == 0){
             $dataArray = [
                 "gameid" => $request->input("gameid"),
-                "firstquarter" => $request->input("firstq"),
-                "secondquarter" => $request->input("secondq"),
-                "thirdquarter" => $request->input("thirdq"),
-                "fourthquarter" => $request->input("fourthq"),
-                "grandprice" => $request->input("grandprize"),
-                "addedby" => Auth::id()
+                "firstquarter" => $request->input("firstQuarter"),
+                "secondquarter" => $request->input("secondQuarter"),
+                "thirdquarter" => $request->input("thirdQuarter"),
+                "fourthquarter" => $request->input("fourthQuarter"),
+                "grandprice" => $request->input("grandPrize"),
+                "addedby" => Auth::id(),
+                "created_at" => date("Y-m-d H:i:s",time())
             ];
-            $res = $prizesModel->insert($dataArray);
+            $res = $prizesModel->insertGetId($dataArray);
+            if(count($_FILES["images"]["name"]) > 0){
+                $imgDataArray = [];
+                $imagesModel = new Images();
+                for($i = 0; $i < count($_FILES["images"]["name"]); $i++){
+
+                    $imgDataArray[$i]["name"] = $_FILES["images"]["name"][$i];
+                    $imgDataArray[$i]["type"] = $_FILES["images"]["type"][$i];
+                    $imgDataArray[$i]["path"] = "img/prizesImg/" . $_FILES["images"]["name"][$i];
+                    $imgDataArray[$i]["gameid"] = $request->input("gameid");
+                    $imgDataArray[$i]["created_at"] = date("Y-m-d H:i:s",time());
+                    $imagesModel->insert($imgDataArray[$i]);
+                    if(move_uploaded_file($_FILES["images"]["tmp_name"][$i], $imgDataArray[$i]["path"])){
+                        return 0;
+                    }
+                }
+            }
         }else{
             // update
             $dataArray = [

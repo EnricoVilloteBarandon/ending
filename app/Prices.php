@@ -14,7 +14,7 @@ class Prices extends Model
     }
     public function getPrizesInfoById($id){
         return DB::table($this->table)
-            ->where("id",$id)
+            ->where("gameid",$id)
             ->first();
     }
     public function insert($dataArray){

@@ -33,10 +33,10 @@
                   <option value="1">Close</option>
                 </select>
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label>Pics:</label> 
                 <input type="file" multiple="multiple" name="images[]">
-            </div>
+            </div> -->
         </form>
       </div>
       <div class="modal-footer">

@@ -21,6 +21,7 @@ Route::get('/admin',function(){
     return view('home/login');
 });
 Route::post('login','HomeController@doLogin');
+Route::get('/prize/{id}','HomeController@getPrizeInfo');
 
 
 

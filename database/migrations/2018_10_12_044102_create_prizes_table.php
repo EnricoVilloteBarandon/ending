@@ -15,17 +15,17 @@ class CreatePrizesTable extends Migration
     {
         Schema::create('prices',function(Blueprint $table){
             $table->increments('id');
-            $table->integer('gameid',11);
-            $table->float('firstquarter');
-            $table->float('secondquarter');
-            $table->float('thirdquarter');
-            $table->float('fourthquarter');
+            $table->integer('gameid');
+            $table->float('firstquarter')->nullable();
+            $table->float('secondquarter')->nullable();
+            $table->float('thirdquarter')->nullable();
+            $table->float('fourthquarter')->nullable();
             $table->string('grandprice',255);
-            $table->integer('addedby',11);
-            $table->string('winner',50);
-            $table->integer('claimed',11);
-            $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
-            // $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
+            $table->integer('addedby');
+            $table->string('winner',50)->nullable();
+            $table->integer('claimed')->nullable();
+            $table->dateTime('created_at');
+            $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
         });
     }
 
@@ -36,6 +36,6 @@ class CreatePrizesTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('prices');
     }
 }

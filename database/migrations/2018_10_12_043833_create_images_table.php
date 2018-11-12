@@ -15,11 +15,12 @@ class CreateImagesTable extends Migration
     {
         Schema::create('images',function(Blueprint $table){
             $table->increments('id');
-            $table->integer('gameid',11);
+            $table->integer('gameid');
             $table->string('name',100);
             $table->string('type',100);
             $table->string('path',255);
-            $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
+            $table->dateTime('created_at');
+            $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
         });
     }
 
@@ -30,6 +31,6 @@ class CreateImagesTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('images');
     }
 }

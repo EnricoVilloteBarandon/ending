@@ -23,6 +23,18 @@
                 <input type="text" class="form-control" name="amount" id="amount">
             </div>
             <div class="form-group">
+                <label>First Q Result:</label>
+                <input type="text" class="form-control" name="firstqresult" id="firstqresult">
+            </div>
+            <div class="form-group">
+                <label>Second Q Result:</label>
+                <input type="text" class="form-control" name="secondqresult" id="secondqresult">
+            </div>
+            <div class="form-group">
+                <label>Third Q Result:</label>
+                <input type="text" class="form-control" name="thirdqresult" id="thirdqresult">
+            </div>
+            <div class="form-group">
                 <label>Result:</label>
                 <input type="text" class="form-control" name="result" id="result">
             </div>

@@ -63,6 +63,16 @@ $("document").ready(function(){
                                             //     type: 'info',
                                             //     text: $(this).find('span.num').text() + "<br/><h3>Bet successfully placed.</h3>"
                                             // });
+                                        }else if(response == 1){
+                                            // DateTime invalid or game closed
+                                            swal("Betting Closed", {
+                                                icon: "error",
+                                            });
+                                        }else if(response == 2){
+                                            // bet exist // if ever na mag sabay ng click
+                                            swal("Bet already placed", {
+                                                icon: "error",
+                                            });
                                         }
                                         $(".loader").css("display","none");
                                         // location.reload();

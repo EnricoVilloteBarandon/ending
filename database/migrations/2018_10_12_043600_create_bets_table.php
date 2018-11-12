@@ -14,12 +14,12 @@ class CreateBetsTable extends Migration
     public function up()
     {
         Schema::create('bets',function(Blueprint $table){
-            $table->primary('id')->autoIncrement();
+            $table->increments('id');
             $table->string('playerid',50);
-            $table->integer('gameid',11);
+            $table->integer('gameid');
             $table->string('bet',11);
-            $table->tinyinteger('status',2);
-            $table->dateTime('created_at')->default("2019-09-09 00:00:00");
+            $table->tinyinteger('status');
+            $table->dateTime('created_at');
             $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
         });
     }
@@ -31,6 +31,6 @@ class CreateBetsTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('bets');
     }
 }

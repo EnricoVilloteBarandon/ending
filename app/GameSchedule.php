@@ -9,7 +9,7 @@ class GameSchedule extends Model
     protected $table = "game_schedule";
     public function getAvailableGames(){
         return DB::table($this->table)
-            ->select("game_schedule.id","game_schedule.title","game_schedule.date","prices.firstquarter","game_schedule.bet_amount",
+            ->select("game_schedule.id","game_schedule.title","game_schedule.date","prices.firstquarter","game_schedule.bet_amount","game_schedule.result",
                     "prices.secondquarter","prices.thirdquarter","prices.fourthquarter",
                     "prices.grandprice")
             ->where("game_schedule.status",0)

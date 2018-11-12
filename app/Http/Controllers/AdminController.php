@@ -162,21 +162,62 @@ class AdminController extends Controller
                 'title' => $request->input("title"),
                 'date' => $request->input("date"),
                 'bet_amount' => $request->input("amount"),
+                'firstqresult' => $request->input("firstqresult"),
+                'secondqresult' => $request->input("secondqresult"),
+                'thirdqresult' => $request->input("thirdqresult"),
                 'result' => $request->input("result"),
                 'status' => $request->input("status")
             ];
             $res = $gameModel->updateGame($request->input("id"),$dataArray);
+            $betsModel = new Bets();
+            $prizesModel = new Prices();
+            if($request->input("firstqresult") != ""){
+                $dataArray = [
+                    "gameid" => $request->input("id"),
+                    "result" => $request->input("firstqresult")
+                ];
+                $firstqwinner = $betsModel->findWinner($dataArray);
+                if($firstqwinner != null){
+                    $updateWinner = $betsModel->updateBets($firstqwinner->id,["status" => 2]);
+                    $firstqprice = $prizesModel->getPrizesInfoById($firstqwinner->gameid);
+                    $updateOdbc = $this::updateODBC(["username" => $firstqwinner->playerid, "prize" => $firstqprice->firstquarter]);
+                }
+            }
+            if($request->input("secondqresult") != ""){
+                $dataArray = [
+                    "gameid" => $request->input("id"),
+                    "result" => $request->input("secondqresult")
+                ];
+                $secondqwinner = $betsModel->findWinner($dataArray);
+                if($secondqwinner != null){
+                    $updateWinner = $betsModel->updateBets($secondqwinner->id,["status" => 2]);
+                    $secondqprice = $prizesModel->getPrizesInfoById($secondqwinner->gameid);
+                    $updateOdbc = $this::updateODBC(["username" => $secondqwinner->playerid, "prize" => $secondqprice->secondquarter]);
+                }
+            }
+            if($request->input("thirdqresult") != ""){
+                $dataArray = [
+                    "gameid" => $request->input("id"),
+                    "result" => $request->input("thirdqresult")
+                ];
+                $thirdqwinner = $betsModel->findWinner($dataArray);
+                if($thirdqwinner != null){
+                    $updateWinner = $betsModel->updateBets($thirdqwinner->id,["status" => 2]);
+                    $thirdqprice = $prizesModel->getPrizesInfoById($thirdqwinner->gameid);
+                    $updateOdbc = $this::updateODBC(["username" => $thirdqwinner->playerid, "prize" => $thirdqprice->thirdquarter]);
+                }
+            }
             if($request->input("result") != ""){
-                $betsModel = new Bets();
-                $prizesModel = new Prices();
                 $dataArray = [
                     "gameid" => $request->input("id"),
                     "result" => $request->input("result")
                 ];
                 $winner = $betsModel->findWinner($dataArray);
-                $updateWinner = $betsModel->updateBets($winner->id,["status" => 2]);
+                if($winner != null){
+                    $updateWinner = $betsModel->updateBets($winner->id,["status" => 2]);
+                    $updatePrize = $prizesModel->updatePrize( $request->input("id"),["winner" => $winner->id]);
+                }
                 $updateLosers = $betsModel->updateBets("",["status" => 1,"gameid" =>  $request->input("id")]);
-                $updatePrize = $prizesModel->updatePrize( $request->input("id"),["winner" => $winner->id]);
             }
         }
         if($res){
@@ -212,7 +253,7 @@ class AdminController extends Controller
                 "created_at" => date("Y-m-d H:i:s",time())
             ];
             $res = $prizesModel->insertGetId($dataArray);
-            if(count($_FILES["images"]["name"]) > 0){
+            if(!empty($_FILES["images"]["name"])){
                 $imgDataArray = [];
                 $imagesModel = new Images();
                 for($i = 0; $i < count($_FILES["images"]["name"]); $i++){
@@ -245,5 +286,44 @@ class AdminController extends Controller
         }else{
             return 1;
         }
+    }
+    public function updateODBC($dataArray){
+        date_default_timezone_set('Asia/Hong_Kong');
+        $date = date("N",time());
+        switch($date){
+            case 1:
+                $rslt = "MON_RSLT";
+                break;
+            case 2:
+                $rslt = "TUE_RSLT";
+                break;
+            case 3:
+                $rslt = "WED_RSLT";
+                break;
+            case 4:
+                $rslt = "THU_RSLT";
+                break;
+            case 5:
+                $rslt = "FRI_RSLT";
+                break;
+            case 6:
+                $rslt = "SAT_RSLT";
+                break;
+            case 7:
+                $rslt = "SUN_RSLT";
+                break;
+        }
+        $odbc = odbc_connect('cima','','');
+        $query = "select * from cust.dbf where ucase(NAME) = '". strtoupper($dataArray["username"]) ."'";
+        $res = odbc_exec($odbc,$query);
+        $balance = 0;
+        while($row = odbc_fetch_array($res)){
+            $rsltValue = $row[$rslt];
+            $newRSLT = $rsltValue + $dataArray["prize"];
+            var_dump($rsltValue);
+            var_dump($newRSLT);
+        }
+        $updateQuery = "update cust.dbf set " . $rslt . "= ". $newRSLT ." where ucase(NAME) = '". strtoupper($dataArray["username"]) ."'";
+        $updateRes = odbc_exec($odbc,$updateQuery);
     }
 }

@@ -13,17 +13,17 @@ class CreateGamescheduleTable extends Migration
      */
     public function up()
     {
-        Schema::create('bets',function(Blueprint $table){
+        Schema::create('game_schedule',function(Blueprint $table){
             $table->increments('id');
             $table->string('title',255);
-            $table->longText('description');
+            $table->longText('description')->nullable();
             $table->string('date');
-            $table->integer('addedby',11);
-            $table->tinyinteger('status',2);
+            $table->integer('added_by');
+            $table->tinyinteger('status')->default(0);
             $table->float('bet_amount');
-            $table->string('result',11);
-            $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
-            // $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
+            $table->string('result',11)->nullable();
+            $table->dateTime('created_at');
+            $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
         });
     }
 
@@ -34,6 +34,6 @@ class CreateGamescheduleTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('game_schedule');
     }
 }

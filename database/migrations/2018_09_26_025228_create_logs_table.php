@@ -17,8 +17,8 @@ class CreateLogsTable extends Migration
             $table->increments('id');
             $table->integer('userid');
             $table->string('description',100);
-            $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
-            // $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
+            $table->dateTime('created_at');
+            $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
         });
     }
 
@@ -30,6 +30,6 @@ class CreateLogsTable extends Migration
     public function down()
     {
         //
-        Schema::drop('logs');
+        Schema::dropIfExists('logs');
     }
 }

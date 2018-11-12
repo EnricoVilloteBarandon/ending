@@ -15,6 +15,9 @@ $("document").ready(function(){
                 $("#title").val(response["title"]);
                 $("#date").val(response["date"]);
                 $("#amount").val(response["bet_amount"]);
+                $("#firstqresult").val(response["result"]);
+                $("#secondqresult").val(response["result"]);
+                $("#thirdqresult").val(response["result"]);
                 $("#result").val(response["result"]);
                 $("#status").val(response["status"]);
             }

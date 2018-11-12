@@ -168,24 +168,32 @@ class HomeController extends Controller
         }
     }
     public function submitBet(Request $request){
+        date_default_timezone_set('Asia/Hong_Kong');
         if (!isset($_SESSION)) session_start();
-        $dataArray = [
-            "playerid" => $request->input("playerid"),
-            "gameid" => $request->input("gameid"),
-            "bet" => $request->input("bet"),
-            "amount" => $request->input("amount"),
-            "created_at" => date('Y-m-d H:i:s',time())
-        ];
-        $betsModel = new Bets();
-        // $usersModel = new Users();
-        // $oldBalance = $usersModel->getUserInfoWithId($dataArray["playerid"])->balance;
-        $oldBalance = $_SESSION["balance"];
-        $dataArray["balance"] = $oldBalance - $request->input('amount');
-        $this::updateOdbcBalance($dataArray);
-        // $newBalance = $usersModel->updateBalance($dataArray);
-        unset($dataArray["balance"]);
-        unset($dataArray["amount"]);
-        $query = $betsModel->insert($dataArray);
+        $gameDateTime = $this::getGameTitle($request->input("gameid"))->date;
+        if(strtotime($gameDateTime) < strtotime(date("Y-m-d H:i:s",time()))){
+            return 1;
+        }else{
+            $bet = $this::checkBetIfExisting(["gameid" => $request->input("gameid"),"bet" => $request->input("bet") ]);
+            if($bet == null){
+                $dataArray = [
+                    "playerid" => $request->input("playerid"),
+                    "gameid" => $request->input("gameid"),
+                    "bet" => $request->input("bet"),
+                    "amount" => $request->input("amount"),
+                    "created_at" => date('Y-m-d H:i:s',time())
+                ];
+                $betsModel = new Bets();
+                $oldBalance = $_SESSION["balance"];
+                $dataArray["balance"] = $oldBalance - $request->input('amount');
+                $this::updateOdbcBalance($dataArray);
+                unset($dataArray["balance"]);
+                unset($dataArray["amount"]);
+                $query = $betsModel->insert($dataArray);
+            }else{
+                return 2;
+            }
+        }
     }
     public function checkBalance(Request $request){
         $amount = $request->input('amount');
@@ -254,5 +262,10 @@ class HomeController extends Controller
         $gameSchedModel = new GameSchedule();
         $gameTitle = $gameSchedModel->getGameInfoById($iGameId);
         return $gameTitle;
+    }
+    public function checkBetIfExisting($dataArray){
+        $betsModel = new Bets();
+        $bet = $betsModel->findBet($dataArray);
+        return $bet;
     }
 }

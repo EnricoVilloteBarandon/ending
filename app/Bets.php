@@ -46,4 +46,10 @@ class Bets extends Model
                 ->update($dataArray);
         }
     }
+    public function findBet($dataArray){
+        return DB::table($this->table)
+            ->where("gameid",$dataArray["gameid"])
+            ->where("bet",$dataArray["bet"])
+            ->first();
+    }
 }
